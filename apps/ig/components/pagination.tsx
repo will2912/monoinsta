@@ -2,7 +2,7 @@ import { Button } from "./ui/button";
 import { Card } from "./ui/card";
 
 
-export default function Pagination({ currentPage, totalPages, onPageChange, currentPosts, setCurrentPage }) {
+export default function Pagination({ currentPage, totalPages, onPageChange, currentPosts, setCurrentPage }:any) {
     const handlePageChange = () => {
 
     }
@@ -11,7 +11,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange, curr
        <>
        
                <section className="mt-6 grid grid-cols-2 gap-4 md:grid-cols-3 ">
-          {currentPosts?.map((post) => (
+          {currentPosts?.map((post:any) => (
             <div
               key={post.id}
               className="group relative aspect-square overflow-hidden rounded-xl bg-black"

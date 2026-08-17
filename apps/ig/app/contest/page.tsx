@@ -26,12 +26,20 @@ type Contest = {
   created_at: string;
 };
 
+type Post = {
+  id: string;
+  post_url: string;
+  caption: string;
+  created_at: string;
+  file_type: string;
+};
+
 export default function ContestPage() {
   const [contest, setContest] = useState<Contest | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
-  const [myPosts, setMyPosts] = useState([]);
-  const [selectedPost, setSelectedPost] = useState(null);
+  const [myPosts, setMyPosts] = useState<Post[]>([]);
+  const [selectedPost, setSelectedPost] = useState<string | null>(null);
   const [isNominate, setNominate ] = useState (true);
   const {user , isLoading: isUserLoading} = useUser();
   
@@ -39,23 +47,25 @@ export default function ContestPage() {
 
 
 
-  useEffect(() => {
+useEffect(() => {
   if (isUserLoading || !user || !contest) return;
 
+  const userSub = user.sub;
+  const contestId = contest.id;
+
   async function fetchIsNominated() {
-    const userId = await getUserId(user.sub);
+    const userId = await getUserId(userSub);
 
     const res = await fetch(
-      `/api/contest_entries?userId=${userId}&contestId=${contest.id}`
+      `/api/contest_entries?userId=${userId}&contestId=${contestId}`
     );
+
     const data = await res.json();
     setNominate(data);
-    
-    
   }
 
   fetchIsNominated();
-}, [isUserLoading, user, contest,isNominate]);
+}, [isUserLoading, user, contest]);
 
   useEffect(()=>{
     async function fetchPosts() {

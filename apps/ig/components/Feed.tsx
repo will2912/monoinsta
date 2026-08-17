@@ -23,13 +23,13 @@ export default function Feed({ post , isActive, handleCommentClick,  dbUser }: a
 
 
 const myRating = post.ratings.find(
-  (r) => r.user_id === dbUser?.id
+  (r: any) => r.user_id === dbUser?.id
 )?.rating ?? null;
 
 const averageRating =
   post.ratings.length === 0
     ? 0
-    : post.ratings.reduce((sum, r) => sum + r.rating, 0) /
+    : post.ratings.reduce((sum:any, r:any) => sum + r.rating, 0) /
       post.ratings.length;
 
 
@@ -38,7 +38,7 @@ useEffect(() => {
 
   setIsLiked(
     post.likes.some(
-      like => like.user_id === dbUser.id
+      (like:any) => like.user_id === dbUser.id
     )
   );
 }, [dbUser?.id, post.likes]);
@@ -95,7 +95,7 @@ const handleLike=async()=>{
         })
     })
     
-    setLikesCount(prevCount => isLiked ? prevCount - 1 : prevCount + 1);
+    setLikesCount((prevCount:any) => isLiked ? prevCount - 1 : prevCount + 1);
     setIsLiked(!isLiked);
     
 }

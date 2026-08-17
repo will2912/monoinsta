@@ -30,8 +30,8 @@ export default function CommentPannel({isOpen, setIsOpen, selectedPost, setComme
     }, [isOpen, selectedPost]);
 
     const handlePostComment = async()=>{
-        console.log(user?.sub)
-
+        
+        if (!user?.sub) return;
          const res = await fetch("/api/comments", {
             method: "POST",
             headers: {
@@ -46,8 +46,8 @@ export default function CommentPannel({isOpen, setIsOpen, selectedPost, setComme
         if (res.ok) {
              await fetchComments();
         setContent("");
-        setPost(prev =>
-        prev.map(post =>
+        setPost((prev:any) =>
+        prev.map((post:any) =>
             post.id === selectedPost.id
             ? {
           ...post,
@@ -75,7 +75,7 @@ export default function CommentPannel({isOpen, setIsOpen, selectedPost, setComme
                         </Button>
                     </div>
                     <div className="flex-1 overflow-y-auto  no-scrollbar">
-                        {comments.map((comment)=>(
+                        {comments.map((comment:any)=>(
                             <p key={comment.id} className="p-2 border-b border-gray-700 flex items-center gap-2">
                                 <span >
                                     <img src={comment.users.avatar_url} alt={comment.users.username} className="w-8 h-8 rounded-full" />

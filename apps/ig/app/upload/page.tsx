@@ -13,7 +13,7 @@ export default function UploadPage() {
 
     const [file, setFile] = useState<File | null>(null);
     const [caption, setCaption] = useState<string>("");
-    const [musicFile, setMusicFile] = useState(null);
+    const [musicFile, setMusicFile] = useState<any>(null);
     const [isOpen, setIsOpen] = useState(false);
     const [musicValue, setMusicValue] = useState("search music");
 
@@ -26,7 +26,9 @@ export default function UploadPage() {
     }, [musicFile]);
 
     const handleUpload=async ()=>{
-        const user_id = await getUserId(user?.sub);
+       if (!user?.sub) return;
+        if (!file) return;
+const user_id = await getUserId(user.sub);
         const formdata = new FormData();
         formdata.append("userId", user_id);
         formdata.append("file", file);

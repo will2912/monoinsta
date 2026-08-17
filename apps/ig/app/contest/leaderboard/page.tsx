@@ -3,9 +3,22 @@
 import supabase from "@/lib/supabase";
 import { useState, useEffect } from "react";
 
+type Contest = {
+  id: string;
+};
+
+type LeaderboardEntry = {
+  entry_id: string;
+  rank: number;
+  user_id: string;
+  post_average: number;
+  rating_count: number;
+  ranking_score: number;
+};
+
 export default function LeaderboardPage() {
-    const [leaderboard, setLeaderboard] = useState([]);
-    const [contest, setContest] = useState();
+     const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
+  const [contest, setContest] = useState<Contest | null>(null);
 const [loading, setLoading] = useState(true);
 
 useEffect(() => {

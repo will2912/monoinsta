@@ -4,8 +4,8 @@ import { Star } from "lucide-react";
 import { useRef, useState, useEffect } from "react";
 
 type RatingSliderProps = {
-  initialRating?: number | null;
-  averageRating?: number;
+  initialRating?: any;
+  averageRating?: any;
   onRatingChange?: (rating: number) => void;
 };
 

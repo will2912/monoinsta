@@ -10,14 +10,20 @@ import CommentPannel from "@/components/commentPannel"
 import { useUser } from "@auth0/nextjs-auth0/client";
 
 
-
+type Post = {
+  id: string;
+  post_url: string;
+  caption: string;
+  created_at: string;
+  file_type: string;
+};
 
 export default function Home(){
     const [isOpen, setIsOpen] = useState(false);
-    const [posts, setPosts] = useState([]);
+    const [posts, setPosts] = useState<Post[]>([]);
+const [selectedPost, setSelectedPost] = useState<Post | null>(null);
     const [activeIndex, setActiveIndex] = useState(0);
     const containerRef = useRef<HTMLDivElement>(null);
-    const [selectedPost, setSelectedPost] = useState(null);
     const [commentsCount, setCommentsCount] = useState(0);
      const { user: currentUser } = useUser();
      const [dbUser, setDbUser] = useState(null);
