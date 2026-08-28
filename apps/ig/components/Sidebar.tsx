@@ -99,6 +99,24 @@ export default function Sidebar() {
           Settings
         </Button>
         </Link>
+
+        <Link href="/settings" className="w-full">
+        <Button
+          className="
+            w-full
+            flex h-14 items-center justify-start
+            rounded-xl
+            px-4
+            text-base
+            font-medium
+            transition-all
+            hover:bg-white/10
+            active:scale-[0.98]
+          "
+        >
+          apple
+        </Button>
+        </Link>
       </nav>
 
       {/* USER */}
