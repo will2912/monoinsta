@@ -17,11 +17,31 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            set -x
+
+            echo "=== Loading NVM ==="
             export NVM_DIR="$HOME/.nvm"
             source "$NVM_DIR/nvm.sh"
 
+            echo "=== Versions ==="
+            node --version
+            npm --version
+            pm2 --version
+
+            echo "=== Changing directory ==="
             cd /home/ubuntu/monoinsta/apps/ig
+            pwd
+
+            echo "=== Git pull ==="
             git pull origin main
+
+            echo "=== NPM install ==="
             npm install
+
+            echo "=== Build ==="
             npm run build
+
+            echo "=== PM2 restart ==="
             pm2 restart insta
+
+            echo "=== DEPLOYMENT COMPLETE ==="
