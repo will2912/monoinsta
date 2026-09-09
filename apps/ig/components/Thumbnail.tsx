@@ -1,6 +1,15 @@
+"use client"
+import { useRouter } from "next/navigation"
+
 export default function Thumbnail({post}:any) {
+  const router = useRouter();
+
+  const handleClick = async()=>{
+     router.push(`/reels?post=${post.id}`)
+  }
+
   return (
-    <div className="w-full ">
+    <div className="w-full " onClick={handleClick} >
       <div className="w-full aspect-video overflow-hidden rounded-xl">
        { post.file_type==="video"?(
         <video

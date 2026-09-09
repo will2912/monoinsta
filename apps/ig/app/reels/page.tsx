@@ -9,6 +9,7 @@ import { useEffect,useState,useRef } from "react";
 import CommentPannel from "@/components/commentPannel"
 import { useUser } from "@auth0/nextjs-auth0/client";
 import useFeed from "@/hooks/useFeed";
+import { useSearchParams, useRouter } from "next/navigation";
 
 
 type Post = {
@@ -29,6 +30,10 @@ const [selectedPost, setSelectedPost] = useState<Post | null>(null);
      const { user: currentUser } = useUser();
      const [dbUser, setDbUser] = useState(null);
     const {fetchFeed,isLoading,posts,hasMore,setPosts}= useFeed();
+    const searchParmams = useSearchParams();
+    const postId = searchParmams.get("post");
+    const [isInitialized, setIsInitialized] = useState(false);
+    const router =useRouter()
 
 
 const handleScroll = () => {
@@ -52,11 +57,38 @@ const el = containerRef.current;
     }
 };
 
-    useEffect(() => {
-  
+    useEffect(() => {/// initial effect
+  if (postId) return;
 
-  fetchFeed();
-}, [])
+  const loadFeed = async () => {
+    await fetchFeed();
+    setIsInitialized(true);
+  };
+
+  loadFeed();
+}, []);
+
+    useEffect(() => {
+  if (!postId || isInitialized) return;
+
+  const getPost = async () => {
+    const res = await fetch(`/api/reels/${postId}`);
+    const post = await res.json();
+
+    setPosts([post]);
+    setIsInitialized(true);
+  };
+
+  getPost();
+}, [postId, isInitialized]);
+
+useEffect(() => {
+  const currPost = posts[activeIndex];
+
+  if (!currPost) return;
+
+  router.replace(`/reels?post=${currPost.id}`);
+}, [activeIndex, posts]);
 
 useEffect(() => {
   setSelectedPost(posts[activeIndex] ?? null);
