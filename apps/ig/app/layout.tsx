@@ -11,13 +11,13 @@ export default function Rootlayout({children}: {children: React.ReactNode}) {
     return (
         <html lang="en" className={cn("font-sans", geist.variable)}>
             <body>
-                <div className="flex w-full h-screen">
+                <div className="flex w-full h-screen overflow-hidden">
 
                 
                     <Sidebar />
                     <div className="min-w-0 flex-1 overflow-y-auto overflow-x-hidden">
-  {children}
-</div>
+                    {children}
+                    </div>
                 </div>
             </body>
         </html>

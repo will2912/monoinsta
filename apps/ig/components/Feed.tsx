@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import RatingSlider from "./RatingSlider";
 
-export default function Feed({ post , isActive, handleCommentClick,  dbUser }: any) {
+export default function Feed({ post , isActive, handleCommentClick,  dbUser, isLoading }: any) {
     const user = post.users;
     const audioRef = useRef<HTMLAudioElement>(null);
     
